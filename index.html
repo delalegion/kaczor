@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Kaczor BRS</title>
+   <!-- UIkit CSS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/css/uikit.min.css" />
+   <!-- CSS -->
+   <link rel="stylesheet" type="text/css" href="style.css" />
+   <link rel="stylesheet" type="text/css" href="font.css" />
+</head>
+<body>
+   <main class="main">
+      <section class="header">
+         <div class="quotes">
+            <div class="box">
+               <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="sign">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8787 17L0.939346 3.06065L3.06067 0.939331L17 14.8787L30.9393 0.939331L33.0607 3.06065L19.1213 17L33.0607 30.9393L30.9393 33.0606L17 19.1213L3.06067 33.0606L0.939346 30.9393L14.8787 17Z" fill="white"/>
+               </svg> 
+            </div>
+            <p id="typewriter" data-array=""></p>
+         </div>
+         <div class="logo-container">
+            <img src="images/logo.webp" alt="Logo of Popalone styki music label" />
+         </div>
+         <h1>KACZOR BRS</h1>
+         <h2 class="t-red">POPALONE STYKI</h2>
+      </section>
+      <!-- Man photo -->
+      <img src="images/man.webp" alt="Logo of Popalone styki music label" class="photo" alt="Photo of kaczor brs rapper" />
+   </main>
+   <section class="year">
+      <p>2023</p>
+      <div class="box">
+         <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="sign">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8787 17L0.939346 3.06065L3.06067 0.939331L17 14.8787L30.9393 0.939331L33.0607 3.06065L19.1213 17L33.0607 30.9393L30.9393 33.0606L17 19.1213L3.06067 33.0606L0.939346 30.9393L14.8787 17Z" fill="white"/>
+         </svg>         
+      </div>
+   </section>
+
+   <script src="https://unpkg.com/typewriter-effect@2.3.1/dist/core.js"></script>
+
+   <script>
+      // The typewriter element
+var typeWriterElement = document.getElementById('typewriter');
+
+// The TextArray: 
+var textArray = ["NIE PRZEWIDZISZ TEGO CO DZISIAJ TU ZROBIĘ...", "PLAN MAM, IDZIE BRAT...", "POPALONE STYKI, TO ZNACZY GRUBA JAZDA...", "RAP JEST POKRĘCONY MORDO JAK ULICZNE BAJLANDO..."];
+
+// You can also do this by transfering it through a data-attribute
+// var textArray = typeWriterElement.getAttribute('data-array');
+
+
+// function to generate the backspace effect 
+function delWriter(text, i, cb) {
+	if (i >= 0 ) {
+		typeWriterElement.innerHTML = text.substring(0, i--);
+		// generate a random Number to emulate backspace hitting.
+ 		var rndBack = 10 + Math.random() * 100;
+		setTimeout(function() {
+			delWriter(text, i, cb);
+		},rndBack); 
+	} else if (typeof cb == 'function') {
+		setTimeout(cb,1000);
+	}
+};
+
+// function to generate the keyhitting effect
+function typeWriter(text, i, cb) {
+	if ( i < text.length+1 ) {
+		typeWriterElement.innerHTML = text.substring(0, i++);
+		// generate a random Number to emulate Typing on the Keyboard.
+		var rndTyping = 250 - Math.random() * 350;
+		setTimeout( function () { 
+			typeWriter(text, i++, cb)
+		},rndTyping);
+	} else if (i === text.length+1) {
+		setTimeout( function () {
+			delWriter(text, i, cb)
+		},500);
+	}
+};
+
+// the main writer function
+function StartWriter(i) {
+	if (typeof textArray[i] == "undefined") {
+		setTimeout( function () {
+			StartWriter(0)
+		},100);
+	} else if(i < textArray[i].length+1) {
+		typeWriter(textArray[i], 0, function () {
+			StartWriter(i+1);
+		});
+	}  
+};
+// wait one second then start the typewriter
+setTimeout( function () {
+	StartWriter(0);
+},100);
+	
+   </script>
+
+   <!-- UIkit JS -->
+   <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit-icons.min.js"></script>
+</body>
+</html>
