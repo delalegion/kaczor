@@ -13,19 +13,25 @@
 <body>
    <main class="main">
       <section class="header">
-         <div class="quotes">
-            <div class="box">
-               <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="sign">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8787 17L0.939346 3.06065L3.06067 0.939331L17 14.8787L30.9393 0.939331L33.0607 3.06065L19.1213 17L33.0607 30.9393L30.9393 33.0606L17 19.1213L3.06067 33.0606L0.939346 30.9393L14.8787 17Z" fill="white"/>
-               </svg> 
+         <div class="quotes-container">
+            <div class="quotes">
+               <div class="box">
+                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="sign">
+                     <path fill-rule="evenodd" clip-rule="evenodd" d="M14.8787 17L0.939346 3.06065L3.06067 0.939331L17 14.8787L30.9393 0.939331L33.0607 3.06065L19.1213 17L33.0607 30.9393L30.9393 33.0606L17 19.1213L3.06067 33.0606L0.939346 30.9393L14.8787 17Z" fill="white"/>
+                  </svg> 
+               </div>
+               <p id="typewriter" data-array=""></p>
             </div>
-            <p id="typewriter" data-array=""></p>
          </div>
          <div class="logo-container">
             <img src="images/logo.webp" alt="Logo of Popalone styki music label" />
          </div>
-         <h1>KACZOR BRS</h1>
-         <h2 class="t-red">POPALONE STYKI</h2>
+         <div class="title-container">
+            <h1 class="main-title">KACZOR BRS</h1>
+         </div>
+         <div class="subtitle-container">
+            <h2 class="t-red subtitle">POPALONE STYKI</h2>
+         </div>
       </section>
       <!-- Man photo -->
       <img src="images/man.webp" alt="Logo of Popalone styki music label" class="photo" alt="Photo of kaczor brs rapper" />
@@ -43,62 +49,74 @@
 
    <script>
       // The typewriter element
-var typeWriterElement = document.getElementById('typewriter');
+      var typeWriterElement = document.getElementById('typewriter');
 
-// The TextArray: 
-var textArray = ["NIE PRZEWIDZISZ TEGO CO DZISIAJ TU ZROBIĘ...", "PLAN MAM, IDZIE BRAT...", "POPALONE STYKI, TO ZNACZY GRUBA JAZDA...", "RAP JEST POKRĘCONY MORDO JAK ULICZNE BAJLANDO..."];
+      // The TextArray: 
+      var textArray = ["NIE PRZEWIDZISZ TEGO CO DZISIAJ TU ZROBIĘ...", "PLAN MAM, IDZIE BRAT...", "POPALONE STYKI, TO ZNACZY GRUBA JAZDA...", "RAP JEST POKRĘCONY MORDO JAK ULICZNE BAJLANDO..."];
 
-// You can also do this by transfering it through a data-attribute
-// var textArray = typeWriterElement.getAttribute('data-array');
+      // You can also do this by transfering it through a data-attribute
+      // var textArray = typeWriterElement.getAttribute('data-array');
 
 
-// function to generate the backspace effect 
-function delWriter(text, i, cb) {
-	if (i >= 0 ) {
-		typeWriterElement.innerHTML = text.substring(0, i--);
-		// generate a random Number to emulate backspace hitting.
- 		var rndBack = 10 + Math.random() * 100;
-		setTimeout(function() {
-			delWriter(text, i, cb);
-		},rndBack); 
-	} else if (typeof cb == 'function') {
-		setTimeout(cb,1000);
-	}
-};
+      // function to generate the backspace effect 
+      function delWriter(text, i, cb) {
+         if (i >= 0 ) {
+            typeWriterElement.innerHTML = text.substring(0, i--);
+            // generate a random Number to emulate backspace hitting.
+            var rndBack = 10 + Math.random() * 100;
+            setTimeout(function() {
+               delWriter(text, i, cb);
+            },rndBack); 
+         } else if (typeof cb == 'function') {
+            setTimeout(cb,1000);
+         }
+      };
 
-// function to generate the keyhitting effect
-function typeWriter(text, i, cb) {
-	if ( i < text.length+1 ) {
-		typeWriterElement.innerHTML = text.substring(0, i++);
-		// generate a random Number to emulate Typing on the Keyboard.
-		var rndTyping = 250 - Math.random() * 350;
-		setTimeout( function () { 
-			typeWriter(text, i++, cb)
-		},rndTyping);
-	} else if (i === text.length+1) {
-		setTimeout( function () {
-			delWriter(text, i, cb)
-		},500);
-	}
-};
+      // function to generate the keyhitting effect
+      function typeWriter(text, i, cb) {
+         if ( i < text.length+1 ) {
+            typeWriterElement.innerHTML = text.substring(0, i++);
+            // generate a random Number to emulate Typing on the Keyboard.
+            var rndTyping = 250 - Math.random() * 350;
+            setTimeout( function () { 
+               typeWriter(text, i++, cb)
+            },rndTyping);
+         } else if (i === text.length+1) {
+            setTimeout( function () {
+               delWriter(text, i, cb)
+            },500);
+         }
+      };
 
-// the main writer function
-function StartWriter(i) {
-	if (typeof textArray[i] == "undefined") {
-		setTimeout( function () {
-			StartWriter(0)
-		},100);
-	} else if(i < textArray[i].length+1) {
-		typeWriter(textArray[i], 0, function () {
-			StartWriter(i+1);
-		});
-	}  
-};
-// wait one second then start the typewriter
-setTimeout( function () {
-	StartWriter(0);
-},100);
+      // the main writer function
+      function StartWriter(i) {
+         if (typeof textArray[i] == "undefined") {
+            setTimeout( function () {
+               StartWriter(0)
+            },100);
+         } else if(i < textArray[i].length+1) {
+            typeWriter(textArray[i], 0, function () {
+               StartWriter(i+1);
+            });
+         }  
+      };
+      // wait one second then start the typewriter
+      setTimeout( function () {
+         StartWriter(0);
+      },100);
 	
+   </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+   <script>
+      gsap.from('.main-title', { duration: 1.7, y: '200%', ease: "power4.out", delay: 0.30});
+      gsap.from('.subtitle', { duration: 1.7, y: '200%', ease: "power4.out", delay: 0.45});
+      gsap.from('.logo-container', { duration: 3, y: '50px', opacity: 0, ease: "power4.out", delay: 0.15});
+      gsap.from('.year', { duration: 1.5, x: '-250px', ease: "power4.out", delay: 0.15});
+      gsap.from('.quotes', { duration: 1.5, y: '-100%', ease: "power4.out", delay: 0.25});
+      gsap.from('.photo', { duration: 1.5, y: '10%', opacity: 0, ease: "power4.out", delay: 0.45});
    </script>
 
    <!-- UIkit JS -->
